@@ -1,0 +1,84 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Comments
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item">
+        Comments
+    </li>
+    <li class="breadcrumb-item active">
+        All
+    </li>
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="fa fa-comments" aria-hidden="true"></i>
+                Comments
+                <span class="badge badge-secondary"> {{ commentsCount }}</span>
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+
+                {% for comment in comments %}
+
+                    <div class="card mr-4" style="width: 350px; float:left;">
+                        <div class="card-header">
+                            <p>
+                                <strong>
+                                    #{{ comment.Id }}/
+                                </strong>
+                                {{ comment.UserName }}
+                                -
+                                {{ comment.UserEmail }}
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                {{ comment.Item.Title }}
+                                /
+                                {{ comment.Item.Category.Title }}
+                            </p>
+                            <hr>
+                            <textarea readonly rows="3" class="form-control bg-white">{{ comment.text|striptags }}</textarea>
+                        </div>
+                        <div class="card-footer">
+                            <span class="small">{{ comment.CreatedAt|date }}</span>
+                            <form action="{{ path('delete_comment') }}" method="POST" style="display: inline;">
+                                <input type="hidden" name="token" value="{{ csrf_token('delete-comment') }}"/>
+                                <input type="hidden" name="commentId" value="{{ comment.Id }}">
+                                <button type="submit" class="btn btn-link" onclick="return confirm('Delete this comment #{{ comment.Id }}?')">
+                                    <i class="fas fa-trash text-danger"></i>
+                                </button>
+                            </form>
+
+                            {% if comment.IsTestimonial %}
+                                <a href="{{ path('set_unset_testimonial', { 'id' : comment.Id }) }}" class="btn btn-secondary btn-sm"> Unset as testimonial </a>
+                            {% else %}
+                                <a href="{{ path('set_unset_testimonial', { 'id' : comment.Id }) }}" class="btn btn-success btn-sm"> Set as testimonial </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="card-footer">
+
+                {{ knp_pagination_render(comments) }}
+        </div>
+    </div>
+
+{% endblock %}

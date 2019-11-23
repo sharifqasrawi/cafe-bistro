@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v2.1.15
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+-->
+
+<html lang="en">
+
+	<head>
+		<base href="./">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+		<meta name="author" content="Łukasz Holeczek">
+		<meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+
+		<title>
+			{% block title %}
+				-
+				{{ SystemSettings.AppName }}
+			{% endblock %}
+			-
+			{{ SystemSettings.AppName }}
+		</title>
+
+		{% include "_admin_stylesheets.html.twig" %}
+		{% block StyleSheets %}{% endblock %}
+
+	</head>
+
+	<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+		<div class="loader-wrapper">
+			<div class="loader spinner"></div>
+		</div>
+		<header class="app-header navbar">
+			<button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<a class="navbar-brand" href="{{ path('dashboard') }}">
+				<img class="navbar-brand-full" src="{{ asset('assets/images/uploads/' ~ SystemSettings.AppLogo) }}" width="89" height="25" alt="CoreUI Logo">
+				<img class="navbar-brand-minimized" src="{{ asset(SystemSettings.AppLogo) }}" width="30" height="30" alt="CoreUI Logo">
+			</a>
+			<button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<ul class="nav navbar-nav d-md-down-none">
+				<li class="nav-item px-3">
+					<a class="nav-link" href="{{ path('home') }}" target="_blank">
+						<i class="fas fa-eye"></i>
+						Visit Site
+					</a>
+				</li>
+
+				<li class="nav-item dropdown d-md-down-none">
+					<a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-bell"></i>
+						Notifications
+						<i class="badge badge-pill badge-success">{{ NewNotificationsCount }}</i>
+					</a>
+					<div class="dropdown-menu dropdown-menu-lg">
+						<div class="dropdown-header text-center">
+							<strong>You have
+								{{ NewNotificationsCount }}
+								new notifications
+							</strong>
+						</div>
+
+						{% for n in NewNotifications %}
+							{% if n.type == 'COMMENT' %}
+								{% set path = 'item_details' %}
+							{% elseif n.type == 'MESSAGE' %}
+								{% set path = 'message_details' %}
+							{% endif %}
+							<a class="dropdown-item" href="{{ path(path, {id : n.info}) }}" target="_blank">
+								<div style="overflow: auto;">
+									<p class="small">
+										<b>
+											{{ n.text }}</b>
+									</p>
+								</div>
+								<small class="text-muted">
+									{{ n.createdAt|date }}
+									/
+									{{ n.createdAt|ago }}
+								</small>
+							</a>
+
+						{% endfor %}
+						{% if NewNotificationsCount > 0 %}
+
+							<a class="dropdown-item" href="{{ path('clear_notifications') }}">
+								<div class="text-center">
+									<p class="small text-primary">
+										<b class="text-danger">
+											Clear
+										</b>
+									</p>
+								</div>
+							</a>
+						{% endif %}
+
+						<a class="dropdown-item" href="{{ path('notifications') }}">
+							<div class="text-center">
+								<p class="small text-primary">
+									<b>
+										View all notifications
+									</b>
+								</p>
+							</div>
+						</a>
+					</div>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav ml-auto">
+
+				<li class="nav-item dropdown">
+					<a class="nav-link mr-3 " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user"></i>
+						{{ app.user.firstName }}
+						{{ app.user.lastName }}
+
+					</a>
+					<div class="dropdown-menu dropdown-menu-right">
+
+						<div class="dropdown-header text-center">
+							<strong>Account</strong>
+						</div>
+						<a class="dropdown-item" href="{{ path('profile') }}">
+							<i class="fas fa-user"></i>
+							Profile
+						</a>
+						<a class="dropdown-item" href="{{ path('change_password') }}">
+							<i class="fas fa-wrench"></i>
+							Change Password
+						</a>
+
+						<a class="dropdown-item" href="{{ path('logout') }}">
+							<i class="fas fa-lock"></i>
+							Logout
+						</a>
+					</div>
+				</li>
+
+			</ul>
+
+		</header>
+		<div class="app-body">
+			<div class="sidebar">
+				<nav class="sidebar-nav">
+					<ul class="nav">
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('dashboard') }}">
+								<i class="nav-icon icon-speedometer"></i>
+								Dashboard
+							</a>
+						</li>
+						<li class="nav-title">Categories</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('list_categories', { d: 0 } ) }}">
+								<i class="fas fa-list"></i>
+								List
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('new_category') }}">
+								<i class="fas fa-plus"></i>
+								New
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('list_categories', { d: 1 } ) }}">
+								<i class="fas fa-trash-alt"></i>
+								Trash
+							</a>
+						</li>
+
+						<li class="nav-title">Items</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('list_items', { d: 0 } ) }}">
+								<i class="fas fa-list"></i>
+								List
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('create_item') }}">
+								<i class="fas fa-plus"></i>
+								New
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('list_items', { d: 1 } ) }}">
+								<i class="fas fa-trash-alt"></i>
+								Trash
+							</a>
+						</li>
+
+						<li class="nav-title">Messages</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('list_messages') }}">
+								<i class="fas fa-envelope"></i>
+								All messages
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<main
+				class="main">
+				<!-- Breadcrumb-->
+				<ol class="breadcrumb"> {% block breadcrumb %}{% endblock %}
+
+					</ol>
+					<div class="container-fluid"> {% block body %}{% endblock %}
+
+						</div>
+					</main>
+
+				</div>
+				<footer class="app-footer">
+					<div>
+						<a href="https://coreui.io">CoreUI</a>
+						<span>&copy; 2018 creativeLabs.</span>
+					</div>
+					<div class="ml-auto">
+						<span>Powered by</span>
+						<a href="https://coreui.io">CoreUI</a>
+					</div>
+				</footer>
+
+				{% include "_admin_scripts.html.twig" %}
+				{% block Scripts %}{% endblock %}
+
+				<!-- Flashed Messages-->
+				<script>
+                    {% for label, messages in app.flashes %}
+                     {% for message in messages %} 
+                     {% if label == 'success' %}
+                        toastr.success('{{ message }}');
+                        {% endif %} 
+                        {% if label == 'notice' %}
+                        toastr.info('{{ message }}');
+                        {% endif %} 
+                        {% if label == 'warning' %}
+                        toastr.warning('{{ message }}');
+                        {% endif %} 
+                        {% if label == 'error' %}
+                        toastr.error('{{ message }}');
+                        {% endif %} 
+                        {% endfor %}
+                        {% endfor %}
+				</script>
+			</body>
+
+		</html>
+	</body>
+
+</html>

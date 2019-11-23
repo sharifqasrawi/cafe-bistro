@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<base href="./">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>
+			{% block title %}
+				-
+				{{ SystemSettings.AppName }}
+			{% endblock %}
+			-
+			{{ SystemSettings.AppName }}
+		</title>
+
+		{% include "_client_stylesheets.html.twig" %}
+		{% block stylesheets %}{% endblock %}
+
+	</head>
+
+	<body>
+		<div class="loader-wrapper">
+			<div class="loader spinner"></div>
+		</div>
+		<noscript>
+			<div class="alert alert-danger">
+				<h2 class="text-center">
+					Please enable javascripts in your browser.
+				</h2>
+			</div>
+		</noscript>
+
+		<script>
+			document.body.className += ' fade-out';
+		</script>
+		<nav>
+			<div class="menu-icon">
+				<i class="fas fa-bars"></i>
+				Menu
+			</div>
+			<div class="logo">
+				<a href="{{ path('home') }}">
+					<img src="{{ asset('assets/images/uploads/'~SystemSettings.AppLogo) }}" alt="Cafe La Fontaine" width="100">
+				</a>
+			</div>
+			<div class="menu">
+				<ul>
+					<li><a href="{{path('home')}}"><i class="fas fa-home"></i> Home</a></li>
+					<li><a href="{{path('menu')}}"><i class="far fa-list-alt"></i> Menu</a></li>
+					<li><a href="{{path('gallery')}}"><i class="far fa-images"></i> Gallary</a></li>
+					<li><a href="{{path('find_us')}}"><i class="fas fa-map-marker-alt"></i> Location</a></li>
+					<li><a href="{{path('contact_us')}}"><i class="far fa-envelope"></i> Contact</a></li>
+				</ul>
+			</div>
+		</nav>
+		{% block body %}{% endblock %}
+		<div class="clearfix"></div>
+
+		<footer>
+			<div class="container pt-4">
+				<div class="row">
+					<div class="col-lg-4">
+						<p>
+							<b>Address:</b>
+						</p>
+						<p>
+							{{ SystemSettings.AddressStreet }}</p>
+						<p>
+							{{ SystemSettings.AddressCity }}</p>
+						<p>
+							{{ SystemSettings.AddressCountry }}</p>
+
+					</div>
+					<div class="col-lg-4">
+
+						<p>
+							<strong>Email:</strong>
+							<a href="mailto: {{ SystemSettings.Email }}">
+								{{ SystemSettings.Email }}
+							</a>
+						</p>
+						<p>
+							<strong>Phone:</strong>
+							{{ SystemSettings.Phone }}
+						</p>
+						<p style="font-size:20pt;">
+							<a href="{{ SystemSettings.FacebookLink }}" target="_blank" class="socialMediaLink">
+								<i class="fab fa-facebook"></i>
+							</a>
+
+							<a href="{{ SystemSettings.TwitterLink }}" target="_blank" class="ml-2">
+								<i class="fab fa-twitter"></i>
+							</a>
+
+							<a href="{{ SystemSettings.InstagramLink }}" target="_blank" class="ml-2">
+								<i class="fab fa-instagram"></i>
+							</a>
+						</p>
+					</div>
+
+					<div class="col-lg-4">
+						<p>
+							<b>Opening Times:</b>
+						</p>
+						<ul>
+							{% for o in OpeningTimes %}
+
+								<li>{{ o.Day }}
+									:
+									{{ o.OpenHour }}
+									-
+									{{ o.CloseHour }}
+								</li>
+
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 text-center small">
+						Developped by: Sharif Qasrawi -
+						<i class="fa fa-copyright" aria-hidden="true"></i>
+						2019 - Version: 1.0 (Beta)
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<a href="#" class="backToTop" title="Back To Top">Back To Top</a>
+		{% include "_client_scripts.html.twig" %}
+		{% block javascripts %}{% endblock %}
+		<!-- Flashed Messages-->
+		<script>
+			{% for label, messages in app.flashes %} 
+			{% for message in messages %} 
+			{% if label == 'success' %}
+toastr.success('{{ message }}');
+{% endif %} {% if label == 'notice' %}
+toastr.info('{{ message }}');
+{% endif %} {% if label == 'warning' %}
+toastr.warning('{{ message }}');
+{% endif %} {% if label == 'error' %}
+toastr.error('{{ message }}');
+{% endif %} {% endfor %} {% endfor %}
+		</script>
+
+
+	</body>
+
+</html>

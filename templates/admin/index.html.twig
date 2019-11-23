@@ -1,0 +1,447 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Admin
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <li class="breadcrumb-item active">/ Website Administration</li>
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="alert alert-info text-center">
+        <h3>
+            Website Content
+        </h3>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-success">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('new_category') }}">
+                                <i class="fas fa-plus"></i>
+                                Create
+                            </a>
+                            <a class="dropdown-item" href="{{ path('list_categories', { d: 0 } ) }}">
+                                <i class="fas fa-check"></i>
+                                Published
+                            </a>
+                            <a class="dropdown-item" href="{{ path('list_categories', { d: 1 } ) }}">
+                                <i class="fas fa-trash"></i>
+                                Trashed
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value badge badge-light">
+                        {{ CategoriesCount }}
+                    </div>
+                    <div class="mt-2">
+                        <h4>Categories</h4>
+                    </div>
+                </div>
+                <div class="mt-1 mx-3 text-center" style="height:50px;">
+                    <i class="fas fa-sitemap" style="font-size: 30pt;"></i>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('create_item') }}">
+                                <i class="fas fa-plus"></i>
+                                Create
+                            </a>
+                            <a class="dropdown-item" href="{{ path('list_items', { d: 0 } ) }}">
+                                <i class="fas fa-check"></i>
+                                Published
+                            </a>
+                            <a class="dropdown-item" href="{{ path('list_items', { d: 1 } ) }}">
+                                <i class="fas fa-trash"></i>
+                                Trashed
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value badge badge-light">
+                        {{ ItemsCount }}
+                    </div>
+                    <div class="mt-2">
+                        <h4>Items</h4>
+                    </div>
+                </div>
+                <div class="mt-1 mx-3 text-center" style="height:50px;">
+                    <i class="fas fa-server" style="font-size: 30pt;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-secondary">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('list_comments') }}">
+                                <i class="fas fa-list-alt"></i>
+                                Manage
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value badge badge-light">
+                        {{ CommentsCount }}
+                    </div>
+                    <div class="mt-2">
+                        <h4>Comments</h4>
+                    </div>
+                </div>
+                <div class="mt-1 mx-3 text-center" style="height:50px;">
+                    <i class="fas fa-comments" style="font-size: 30pt;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-dark">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('create_user') }}">
+                                <i class="fas fa-plus"></i>
+                                Create
+                            </a>
+                            <a class="dropdown-item" href="{{ path('list_users') }}">
+                                <i class="fas fa-user-alt"></i>
+                                Manage
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value badge badge-light">
+                        {{ UsersCount }}
+                    </div>
+                    <div class="mt-2">
+                        <h4>Users</h4>
+                    </div>
+                </div>
+                <div class="mt-1 mx-3 text-center" style="height:50px;">
+                    <i class="fas fa-user-astronaut" style="font-size: 30pt;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('edit_opening_times') }}">
+                                <i class="fas fa-asterisk"></i>
+                                Manage
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value badge badge-light">
+                        {{ OpeningTimesCount }}
+                    </div>
+                    <div class="mt-2">
+                        <h4>Opening Times</h4>
+                    </div>
+                </div>
+                <div class="mt-1 mx-3 text-center" style="height:50px;">
+                    <i class="far fa-clock" style="font-size: 30pt;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-secondary">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('gallary') }}">
+                                <i class="fas fa-asterisk"></i>
+                                Manage
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value badge badge-light">
+                        {{ ImagesCount }}
+                    </div>
+                    <div class="mt-2">
+                        <h4>Gallary</h4>
+                    </div>
+                </div>
+                <div class="mt-1 mx-3 text-center" style="height:50px;">
+                    <i class="far fa-images" style="font-size: 30pt;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('create_message') }}">
+                                <i class="fas fa-plus"></i>
+                                Create
+                            </a>
+                            <a class="dropdown-item" href="{{ path('list_messages') }}">
+                                <i class="fas fa-list-alt"></i>
+                                All messages
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value badge badge-light">
+                        {{ MessagesCount }}
+                    </div>
+                    <div class="mt-2">
+                        <h4>Messages</h4>
+                    </div>
+                </div>
+                <div class="mt-1 mx-3 text-center" style="height:50px;">
+                    <i class="fas fa-envelope" style="font-size: 30pt;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-secondary">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('notifications') }}">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value badge badge-light">
+                        {{ NotificationsCount }}
+                    </div>
+                    <div class="mt-2">
+                        <h4>Notifications</h4>
+                    </div>
+                </div>
+                <div class="mt-1 mx-3 text-center" style="height:50px;">
+                    <i class="fas fa-bell" style="font-size: 30pt;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="alert alert-info text-center" id="siteSet">
+        <h3>Website Settings</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-info">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('edit_appinfo') }}">
+                                <i class="fas fa-pencil-alt"></i>
+                                Edit
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value">
+                        <i class="fas fa-info-circle"></i>
+                        Application Info
+                    </div>
+                    <div class="mt-2">
+                        <p>{{ SystemSettings.AppName }}</p>
+                        <p>{{ SystemSettings.AppInfo }}</p>
+                        <p>{{ SystemSettings.AppInfo2 ?? '&nbsp;' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-info">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('edit_address') }}">
+                                <i class="fas fa-pencil-alt"></i>
+                                Edit
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value">
+                        <i class="fas fa-map-marked-alt"></i>
+                        Address
+                    </div>
+                    <div class="mt-2">
+                        <p>{{ SystemSettings.AddressStreet }}</p>
+                        <p>{{ SystemSettings.AddressCity }}</p>
+                        <p>{{ SystemSettings.AddressCountry }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-info">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('edit_contact_details') }}">
+                                <i class="fas fa-pencil-alt"></i>
+                                Edit
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value">
+                        <i class="fas fa-address-card"></i>
+                        Contact Details
+                    </div>
+                    <div class="mt-2">
+                        <p>
+                            <strong>Email:</strong>
+                            {{ SystemSettings.Email }}</p>
+                        <p>
+                            <strong>Phone:</strong>
+                            {{ SystemSettings.Phone }}</p>
+                        <p>&nbsp;</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-info">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('edit_social_details') }}">
+                                <i class="fas fa-pencil-alt"></i>
+                                Edit
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-value">
+                        <i class="fas fa-share-alt"></i>
+                        Social Media
+                    </div>
+                    <div class="mt-2">
+                        <p>
+                            <i class="fab fa-facebook"></i>
+                            Facebook
+                        </p>
+                        <p>
+                            <i class="fab fa-twitter"></i>
+                            Twitter
+                        </p>
+                        <p>
+                            <i class="fab fa-instagram"></i>
+                            Instagram
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-success">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('website_images') }}">
+                                <i class="fas fa-pencil-alt"></i>
+                                Manage
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <h4>
+                            <i class="fas fa-image"></i>
+                            Website Images</h4>
+                    </div>
+                </div>
+                <div class="mt-1 mx-3 text-center" style="height:50px;">
+                    <i class="fas fa-images" style="font-size: 30pt;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-success">
+                <div class="card-body pb-0">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('menu_settings') }}">
+                                <i class="fas fa-pencil-alt"></i>
+                                Manage
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <h4>
+                            <i class="fas fa-list-alt"></i>
+                            Menu Settings
+                        </h4>
+                    </div>
+                </div>
+                <div class="mt-1 mx-3 text-center" style="height:50px;">
+                    <i class="fas fa-wrench" style="font-size: 30pt;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

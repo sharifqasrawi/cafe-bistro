@@ -1,0 +1,106 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Items
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item">
+        Items
+    </li>
+    <li class="breadcrumb-item active">
+        Create
+    </li>
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="fas fa-pencil-alt"></i>
+                Create new item
+            </h2>
+        </div>
+        <div class="card-body">
+            {{form_start(form) }}
+
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select name="category" id="category" class="form-control">
+                    <option value="">Select a category</option>
+
+                    {% for cat in Categories %}
+                        <option value="{{ cat.Id }}">{{ cat.Title }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="item_Title">Title:</label>
+                {{ form_widget(form.Title, { 'attr' :  { 'class': 'form-control', 'placeholder': 'Enter item title' }}) }}
+            </div>
+
+            <div class="form-group">
+                <label for="item_Description">Description:</label>
+                {{ form_widget(form.Description, { 'attr' :  { 'class': 'form-control', 'placeholder': 'Enter item Description' }}) }}
+            </div>
+
+            <div class="form-group">
+                <label for="item_Price">Price:</label>
+                {{ form_widget(form.Price, { 'attr' :  { 'class': 'form-control', 'placeholder': 'Enter item Price' }}) }}
+            </div>
+
+            <div class="form-group">
+                <label for="item_Image">Image:</label>
+                <div class="custom-file">
+                    {{form_widget(form.Image, {'attr': {'class': 'form-control custom-file-input'  }})}}
+                    <label class="custom-file-label">Choose a file...</label>
+                </div>
+            </div>
+
+
+            <div class="form-group ">
+                <label for="item_isGallery">Add image to gallery</label>
+                <input type="hidden" name="item[isGallery]" value="0">
+                {{form_widget(form.isGallery)}}
+            </div>
+
+            <div class="text-danger">
+                {{ form_errors(form.Title) }}
+                {{ form_errors(form.Description) }}
+                {{ form_errors(form.Price) }}
+                {{ form_errors(form.Image) }}
+                {{ form_errors(form.isGallery) }}
+            </div>
+
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Save
+                    <i class="fas fa-save"></i>
+                </button>
+            </div>
+
+
+            {{form_end(form) }}
+        </div>
+        <div class="card-footer"></div>
+    </div>
+
+{% endblock %}
+
+{% block Scripts %}
+
+    <script>
+        $(document).ready(function () {
+            $('#item_Description').summernote();
+        });
+    </script>
+
+{% endblock %}

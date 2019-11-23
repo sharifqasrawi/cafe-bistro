@@ -1,0 +1,143 @@
+{% extends 'admin/base.html.twig' %}
+
+
+{% set imgPath = 'noimage.png' %}
+
+{% block title %}
+    Items
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item active">
+        Items
+    </li>
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                {% if filterd == 0 %}
+                    <i class="fas fa-list-alt"></i>
+                    Items
+                {% elseif filterd == 1 %}
+                    <i class="fas fa-trash-alt"></i>
+                    Trashed Items
+                {% endif %}
+
+                <span class="badge badge-secondary">{{ ItemsCount }}</span>
+
+            </h2>
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-lg-6"></div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        Filter Results:
+                        <form action="" method="GET">
+                            <select name="category" id="category" class="form-control"
+                                onchange="this.form.submit();">
+                                <option value="">Select a category</option>
+                                <option value="">All</option>
+                                {% for category in Categories %}
+                                    <option value="{{ category.Id }}">{{ category.Title }}</option>                                    
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            {% for item in Items %}
+
+                {% set imgPath = (item.Image == null ? "noimage.png" : item.Image ) %}
+
+                <div class="card">
+                    <div class="card-header">
+                        <i class="badge badge-secondary">#{{ item.Id }}</i>
+                        <b>
+                            {{ item.Title }}</b>
+                        <i class="fas fa-arrow-right"></i>
+                        {{ item.Category.Title }}
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <img src="{{ asset('assets/images/uploads/' ~ imgPath) }}" class="img-thumbnail">
+                            </div>
+                            <div class="col-lg-4">
+                                <b>Description:</b>
+                                <p>{{ item.Description|striptags }}</p>
+                            </div>
+                            <div class="col-lg-1">
+                                <b>Price:</b>
+                                <p>{{ item.Price }}$</p>
+                            </div>
+                            <div class="col-lg-4">
+                                <p>
+                                    <b>Created at:</b>
+                                    {{ item.CreatedAt|date }}
+                                </p>
+                                <p>
+                                    <b>Created by:</b>
+                                    {{ item.CreatedBy }}
+                                </p>
+                                <p>
+                                    {% if item.IsDeleted %}
+                                        <b>Deleted at:</b>
+                                        {{ item.DeletedAt|date }}
+                                    {% else %}
+                                        <b>Available</b>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ path('edit_item', { 'id' : item.Id }) }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-pencil-alt"></i>
+                            Edit
+                        </a>
+
+                        {% if item.IsDeleted %}
+                            <form action="{{ path('restore_item') }}" method="POST" style="display:inline;" id="form_trash" name="form_trash">
+
+                                <input type="hidden" name="token" value="{{ csrf_token('restore-item') }}"/>
+                                <input type="hidden" name="itemId" value="{{ item.Id }}">
+
+                                <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Restore item #{{ item.Id }} from trash?');">
+                                    <i class="fa fa-trash-restore-alt"></i>
+                                    Restore
+                                </button>
+                            </form>
+                        {% else %}
+                            <form action="{{ path('trash_item') }}" method="POST" style="display:inline;" id="form_trash" name="form_trash">
+
+                                <input type="hidden" name="token" value="{{ csrf_token('trash-item') }}"/>
+                                <input type="hidden" name="itemId" value="{{ item.Id }}">
+
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Move item #{{ item.Id }} to trash?');">
+                                    <i class="fas fa-trash"></i>
+                                    Trash
+                                </button>
+                            </form>
+                        {% endif %}
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="card-footer">
+            {{ knp_pagination_render(Items) }}
+        </div>
+    </div>
+
+{% endblock %}

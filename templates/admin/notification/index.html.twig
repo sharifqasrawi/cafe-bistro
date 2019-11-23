@@ -1,0 +1,59 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Notifications
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item active">
+        Notifications
+    </li>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="fas fa-bell"></i>
+                Notifications
+                <span class="badge badge-pill badge-info">{{ notificationsCount }}</span>
+            </h2>
+        </div>
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Type</th>
+                            <th>Text</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for n in notifications %}
+                            <tr>
+                                <td>{{ n.Id }}</td>
+                                <td>{{ n.type }}</td>
+                                <td>{{ n.text }}</td>
+                                <td>{{ n.createdAt|date }}
+                                    /
+                                    {{ n.createdAt|ago }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            {{ knp_pagination_render(notifications) }}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Categories
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item">
+        Categories
+    </li>
+    <li class="breadcrumb-item active">
+        {% if filterd == 0 %}
+            List
+            </span>
+        {% else %}
+            Trashed
+            {% endif %}
+            <span class="badge badge-secondary">{{ CategoriesCount }}</span>
+       
+    </li>
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                {% if filterd == 0 %}
+                    <i class="fas fa-list-alt"></i>
+                    Categories:
+                {% else %}
+                    <i class="fas fa-trash"></i>
+                    Trashed Categories:
+                {% endif %}
+                <span class="badge badge-secondary">
+                        {{ CategoriesCount}}
+                </span> 
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Icon</th>
+                            <th>Display on Home Page
+                                <span class="small badge badge-warning text-white">3</span>
+                            </th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for category in Categories %}
+                            <tr>
+                                <td>
+                                    {{ category.Id }}
+                                </td>
+                                <td>
+                                    {{ category.Title }}
+                                </td>
+                                <td>
+                                    <span class="{{ category.Icon }}"></span>
+                                </td>
+                                <td>
+                                    {% if category.IsOnHomePage %}
+                                        <i class="fas fa-check-circle text-success"></i>
+                                    {% else %}
+                                        <i class="fas fa-times-circle text-danger"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ path('view_category', {id : category.Id}) }}" class="btn btn-info btn-sm">View</a>
+                                    <a href="{{ path('edit_category', {id : category.Id}) }}" class="btn btn-warning btn-sm">Edit</a>
+
+                                    {% if filterd == 0 %}
+
+                                        <form action="{{ path('trash_category') }}" method="POST" style="display:inline;" id="form_trash" name="form_trash">
+
+                                            <input type="hidden" name="token" value="{{ csrf_token('trash-category') }}"/>
+                                            <input type="hidden" name="catId" value="{{ category.Id }}">
+
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                                Trash
+                                            </button>
+                                        </form>
+
+                                    {% else %}
+                                        <form action="{{ path('delete_category') }}" method="POST" style="display:inline;" id="form_delete" name="form_delete">
+
+                                            <input type="hidden" name="token" value="{{ csrf_token('delete-category') }}"/>
+                                            <input type="hidden" name="catId" value="{{ category.Id }}">
+
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this category?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                                Delete
+                                            </button>
+                                        </form>
+
+                                        <form action="{{ path('restore_category') }}" method="POST" style="display:inline;" id="form_restore" name="form_restore">
+
+                                            <input type="hidden" name="token" value="{{ csrf_token('restore-category') }}"/>
+                                            <input type="hidden" name="catId" value="{{ category.Id }}">
+
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                <i class="fas fa-trash-restore"></i>
+                                                Restore
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+                {{ knp_pagination_render(Categories) }}
+        </div>
+    </div>
+
+
+{% endblock %}

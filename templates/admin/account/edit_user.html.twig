@@ -1,0 +1,76 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Edit User
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item">
+        Users
+    </li>
+    <li class="breadcrumb-item active">Edit</li>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="fas fa-plus-circle"></i>
+                Edit User
+            </h2>
+        </div>
+        <div class="card-body">
+
+            <div class="form-group">
+                <label for="edit_user_first_name">First Name:</label>
+                {{form_widget(form.first_name, {'attr': {'class': 'form-control' , 'placeholder': 'Enter user first name' }})}}
+            </div>
+
+            <div class="form-group">
+                <label for="edit_user_last_name">Last Name:</label>
+                {{form_widget(form.last_name, {'attr': {'class': 'form-control' , 'placeholder': 'Enter user last name' }})}}
+            </div>
+
+            <div class="form-group">
+                <label for="edit_user_email">Email (Username):</label>
+                {{form_widget(form.email, {'attr': {'class': 'form-control' , 'placeholder': 'Enter user email' }})}}
+            </div>
+    
+            <div class="form-group ">
+                <label for="edit_user_isAdmin">Is Admin</label>
+                <input type="hidden" name="user[isAdmin]" value="0">
+                {{form_widget(form.isAdmin)}}
+            </div>
+
+            <div class="text-danger">
+                {{ form_errors(form.first_name) }}
+                {{ form_errors(form.last_name) }}
+                {{ form_errors(form.email) }}
+                {{ form_errors(form.isAdmin) }}
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-success" style="width: 150px;">
+                Save
+                                &nbsp;
+                <i class="fas fa-save"></i>
+            </button>
+            <a href="{{ path('dashboard') }}" class="btn btn-secondary">
+                Cancel
+                <i class="fas fa-window-close"></i>
+            </a>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

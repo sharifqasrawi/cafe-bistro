@@ -1,0 +1,271 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Contact Details
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item">
+        System
+    </li>
+    <li class="breadcrumb-item active">
+        Website Images
+    </li>
+
+{% endblock %}
+
+{% block StyleSheets %}
+    <style>
+        .card {
+            height: 360px;
+        }
+
+        .card img {
+            height: 150px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            {{ form_start(formAppLogo, { 'attr': { 'action': path('change_logo_image') } }) }}
+            <input type="hidden" name="type" value="logo">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fas fa-image"></i>
+                        Website Logo
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <img src="{{ asset('assets/images/uploads/' ~ SystemSettings.AppLogo) }}" width="100%" class="img-thumbnail">
+
+                    <div class="custom-file mt-3">
+                        {{form_widget(formAppLogo.AppLogo, {'attr': {'class': 'form-control custom-file-input'  }})}}
+                        <label class="custom-file-label">Choose a file...</label>
+                    </div>
+
+                    <div class="text-danger">
+                        {{ form_errors(formAppLogo.AppLogo) }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success btn-block">
+                        Change
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+            {{ form_end(formAppLogo) }}
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            {{ form_start(formHomePageImage, { 'attr': { 'action': path('change_HomePage_image') } }) }}
+            <input type="hidden" name="type" value="homepage">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fas fa-image"></i>
+                        Home Page BG
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <img src="{{ asset('assets/images/uploads/' ~ SystemSettings.HomePageBackground) }}" width="100%" class="img-thumbnail">
+
+                    <div class="custom-file mt-3">
+                        {{form_widget(formHomePageImage.HomePage_Background, {'attr': {'class': 'form-control custom-file-input'  }})}}
+                        <label class="custom-file-label">Choose a file...</label>
+                    </div>
+
+                    <div class="text-danger">
+                        {{ form_errors(formHomePageImage.HomePage_Background) }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success btn-block">
+                        Change
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+            {{ form_end(formHomePageImage) }}
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            {{ form_start(formAboutUsImage, { 'attr': { 'action': path('change_aboutus_image') } }) }}
+            <input type="hidden" name="type" value="aboutus">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fas fa-image"></i>
+                        About Us Image
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <img src="{{ asset('assets/images/uploads/' ~ SystemSettings.getAboutusImage) }}" width="100%" class="img-thumbnail">
+
+                    <div class="custom-file mt-3">
+                        {{form_widget(formAboutUsImage.Aboutus_Image, {'attr': {'class': 'form-control custom-file-input'  }})}}
+                        <label class="custom-file-label">Choose a file...</label>
+                    </div>
+
+                    <div class="text-danger">
+                        {{ form_errors(formAboutUsImage.Aboutus_Image) }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success btn-block">
+                        Change
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+            {{ form_end(formAboutUsImage) }}
+        </div>
+
+
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            {{ form_start(formLoginImage, { 'attr': { 'action': path('change_login_image') } }) }}
+            <input type="hidden" name="type" value="login">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fas fa-image"></i>
+                        Login Background
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <img src="{{ asset('assets/images/uploads/' ~ SystemSettings.LoginPageBackground) }}" width="100%" class="img-thumbnail">
+
+                    <div class="custom-file mt-3">
+                        {{form_widget(formLoginImage.LoginPageBackground, {'attr': {'class': 'form-control custom-file-input'  }})}}
+                        <label class="custom-file-label">Choose a file...</label>
+                    </div>
+
+                    <div class="text-danger">
+                        {{ form_errors(formLoginImage.LoginPageBackground) }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success btn-block">
+                        Change
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+            {{ form_end(formLoginImage) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            {{ form_start(formGalleryHeaderImage, { 'attr': { 'action': path('change_gallery_header') } }) }}
+            <input type="hidden" name="type" value="gallery">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fas fa-image"></i>
+                        Gallery Header Img
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <img src="{{ asset('assets/images/uploads/' ~ SystemSettings.GalleryHeaderImage) }}" width="100%" class="img-thumbnail">
+
+                    <div class="custom-file mt-3">
+                        {{form_widget(formGalleryHeaderImage.GalleryHeaderImage, {'attr': {'class': 'form-control custom-file-input'  }})}}
+                        <label class="custom-file-label">Choose a file...</label>
+                    </div>
+
+                    <div class="text-danger">
+                        {{ form_errors(formGalleryHeaderImage.GalleryHeaderImage) }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success btn-block">
+                        Change
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+            {{ form_end(formGalleryHeaderImage) }}
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            {{ form_start(formLocationHeaderImage, { 'attr': { 'action': path('change_location_header') } }) }}
+            <input type="hidden" name="type" value="location">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fas fa-image"></i>
+                        Location Header Img
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <img src="{{ asset('assets/images/uploads/' ~ SystemSettings.LocationHeaderImage) }}" width="100%" class="img-thumbnail">
+
+                    <div class="custom-file mt-3">
+                        {{form_widget(formLocationHeaderImage.LocationHeaderImage, {'attr': {'class': 'form-control custom-file-input'  }})}}
+                        <label class="custom-file-label">Choose a file...</label>
+                    </div>
+
+                    <div class="text-danger">
+                        {{ form_errors(formLocationHeaderImage.LocationHeaderImage) }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success btn-block">
+                        Change
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+            {{ form_end(formLocationHeaderImage) }}
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            {{ form_start(formContactHeaderImage, { 'attr': { 'action': path('change_contact_header') } }) }}
+            <input type="hidden" name="type" value="contactus">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fas fa-image"></i>
+                        Contact us Header Img
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <img src="{{ asset('assets/images/uploads/' ~ SystemSettings.ContactHeaderImage) }}" width="100%" class="img-thumbnail">
+
+                    <div class="custom-file mt-3">
+                        {{form_widget(formContactHeaderImage.ContactHeaderImage, {'attr': {'class': 'form-control custom-file-input'  }})}}
+                        <label class="custom-file-label">Choose a file...</label>
+                    </div>
+
+                    <div class="text-danger">
+                        {{ form_errors(formContactHeaderImage.ContactHeaderImage) }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success btn-block">
+                        Change
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+            {{ form_end(formContactHeaderImage) }}
+        </div>
+    </div>
+
+{% endblock %}

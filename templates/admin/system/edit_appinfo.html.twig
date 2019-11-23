@@ -1,0 +1,79 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    App Info
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item active">
+        App Info
+    </li>
+
+{% endblock %}
+
+
+{% block body %}
+    {{ form_start(form) }}
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="fas fa-info-circle"></i>
+                Edit Application Info
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="app_info_AppName">Application Name:</label>
+                {{form_widget(form.AppName, {'attr': {'class': 'form-control'  }})}}
+            </div>
+
+            <div class="form-group">
+                <label for="app_info_AppInfo">Application Info:</label>
+                {{form_widget(form.AppInfo, {'attr': {'class': 'form-control'  }})}}
+            </div>
+
+            <div class="form-group">
+                    <label for="app_info_AppInfo2">Application Info 2:</label>
+                    {{form_widget(form.AppInfo2, {'attr': {'class': 'form-control'  }})}}
+                </div>
+
+            <div class="form-group">
+                <label for="app_info_Aboutus_Text">About Us:</label>
+                {{form_widget(form.Aboutus_Text, {'attr': {'class': 'form-control' , 'rows': '5' }})}}
+            </div>
+
+            <div class="text-danger">
+                {{ form_errors(form.AppName) }}
+                {{ form_errors(form.AppInfo) }}
+                {{ form_errors(form.AppInfo2) }}
+                {{ form_errors(form.Aboutus_Text) }}
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">
+                Save
+                <i class="fas fa-save"></i>
+            </button>
+
+            <a href="{{ path('dashboard') }}" class="btn btn-secondary">
+                Cancel
+                <i class="fas fa-window-close"></i>
+            </a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block Scripts %}
+
+    <script>
+        $(document).ready(function() {
+            $('#app_info_Aboutus_Text').summernote();
+          });
+    </script>
+
+{% endblock %}

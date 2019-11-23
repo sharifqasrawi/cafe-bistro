@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Menu -
+            {{ SystemSettings.AppName }}</title>
+        
+        {% include "_client_stylesheets.html.twig" %}
+
+        <link rel="stylesheet" href="{{ asset('assets/carte/css/demo.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/carte/css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/carte/css/style.css') }}">
+
+        {% set coverH = SystemSettings.MenuCoverHeight == 0 ? 700 : SystemSettings.MenuCoverHeight %}
+        {% set pageH = SystemSettings.MenuPageHeight == 0 ? 800 : SystemSettings.MenuPageHeight %}
+
+        <style>
+            .rm-container {
+                width: 90%;
+                height: {{coverH}}px;
+                min-height: {{coverH}}px;
+                max-width: 480px;
+            }
+
+
+            .rm-container.rm-open .rm-cover {
+                height: {{pageH}}px;
+
+            }
+
+            .rm-container.rm-open .rm-middle,
+            .rm-container.rm-open .rm-right {
+                height: {{pageH}}px;
+            }
+        </style>
+    </head>
+    <body>
+
+            <div class="loader-wrapper"><div class="loader spinner" ></div></div>
+        <header>
+
+            <div
+                class="support-note">
+                <!-- let's check browser support with modernizr -->
+                <span class="no-cssanimations">CSS animations are not supported in your browser</span>
+                <span class="no-csstransforms">CSS transforms are not supported in your browser</span>
+                <span class="no-csstransforms3d">CSS 3D transforms are not supported in your browser</span>
+                <span class="no-csstransitions">CSS transitions are not supported in your browser</span>
+                <span class="note-ie">Sorry, only modern browsers.</span>
+            </div>
+
+        </header>
+
+
+        <section class="main mt-4">
+
+            <div id="rm-container" class="rm-container ">
+
+                <div class="rm-wrapper">
+
+                    <div class="rm-cover">
+
+                        <div class="rm-front">
+                            <div class="rm-content">
+
+                                <div class="rm-logo" style="background-image: url('/assets/images/uploads/{{ SystemSettings.AppLogo }}') ;"></div>
+                                <h2>
+                                    {{ SystemSettings.AppName }}
+                                </h2>
+                                <h3>{{ SystemSettings.AppInfo }}</h3>
+
+                                <a href="#" class="rm-button-open">View the Menu</a>
+                                <a href="{{ path('home') }}" style="color: blue;">Back to home page</a>
+                                <div class="rm-info mt-5">
+                                    <p>
+                                        <strong>{{ SystemSettings.AppName }}</strong><br>
+                                        {{ SystemSettings.AddressStreet }}.<br>
+                                        {{ SystemSettings.AddressCity }}<br>
+                                        {{ SystemSettings.AddressCountry }}<br>
+                                        <hr width="150" >
+                                        <strong>Phone:</strong>
+                                        {{ SystemSettings.Phone }}<br>
+                                        <strong>Email:</strong>
+                                        {{ SystemSettings.Email }}<br>
+                                    </p>
+                                </div>
+
+                            </div>
+                            <!-- /rm-content -->
+                        </div>
+                        <!-- /rm-front -->
+
+                        <div class="rm-back">
+                            <div class="rm-content">
+                                <div class="content hidden">
+                                    <div id="allDayMenu">
+                                        <h4>{{ allDayMenu.Title }}</h4>
+                                        <dl>
+                                            {% for item in allDayMenu.Items %}
+                                            {% set imgPath = item.Image == null ? 'noimage.png' : item.Image %}
+                                                <dt>
+                                                    <a href="{{ path('item_details', { 'id' : item.Id }) }}" class="rm-viewdetails" data-thumb="{{ asset('assets/images/uploads/' ~ imgPath) }}">
+                                                        {{ item.Title }}
+                                                        --
+                                                        {{ item.Price|number_format(2)  }}$
+                                                    </a>
+                                                </dt>
+                                                <dd>{{ item.Description|striptags }}</dd>
+                                            {% endfor %}
+                                        </dl>
+                                    </div>
+
+                                    <div id="lunchMenu" style="display: none;">
+                                        <h4>{{ lunchMenu.Title }}</h4>
+                                        <dl>
+                                            {% for item in lunchMenu.Items %}
+                                            {% set imgPath = item.Image == null ? 'noimage.png' : item.Image %}
+
+                                                <dt>
+                                                    <a href="{{ path('item_details', { 'id' : item.Id }) }}" class="rm-viewdetails" data-thumb="{{ asset('assets/images/uploads/' ~ imgPath) }}">
+                                                        {{ item.Title }}
+                                                        --
+                                                        {{ item.Price|number_format(2)  }}$
+                                                    </a>
+                                                </dt>
+                                                <dd>{{ item.Description|striptags }}</dd>
+                                            {% endfor %}
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a href="#" onclick="toggleMenu();" id="btnToggleMenu" style="color: blue;">View Lunch Menu</a>
+                            <!-- /rm-content -->
+                            <div class="rm-overlay"></div>
+
+                        </div>
+                        <!-- /rm-back -->
+
+                    </div>
+                    <!-- /rm-cover -->
+
+                    <div class="rm-middle">
+                        <div class="rm-inner">
+                            <div class="rm-content">
+                                <div class="content hidden">
+                                    <h4>{{ spcMenu.Title }}</h4>
+                                    <dl>
+                                        {% for item in spcMenu.Items %}
+                                        {% set imgPath = item.Image == null ? 'noimage.png' : item.Image %}
+
+                                            <dt>
+                                                <a href="{{ path('item_details', { 'id' : item.Id }) }}" class="rm-viewdetails" data-thumb="{{ asset('assets/images/uploads/' ~ imgPath) }}">
+                                                    {{ item.Title }}
+                                                    --
+                                                    {{ item.Price|number_format(2)  }}$
+                                                </a>
+                                            </dt>
+                                            <dd>
+                                                {{ item.Description|striptags }}
+                                            </dd>
+
+                                        {% endfor %}
+                                    </dl>
+                                </div>
+                            </div>
+                            <!-- /rm-content -->
+                            <div class="rm-overlay"></div>
+                        </div>
+                        <!-- /rm-inner -->
+                    </div>
+                    <!-- /rm-middle -->
+
+                    <div class="rm-right">
+
+                        <div class="rm-front"></div>
+
+                        <div class="rm-back">
+                            <span class="rm-close">Close</span>
+                            <div class="rm-content">
+                                <div class="content hidden">
+                                    <h4>{{ coffeeMenu.Title }}</h4>
+                                    <dl>
+                                        {% for item in coffeeMenu.Items %}
+                                        {% set imgPath = item.Image == null ? 'noimage.png' : item.Image %}
+
+                                            <dt>
+                                                <a href="{{ path('item_details', { 'id' : item.Id }) }}" class="rm-viewdetails" data-thumb="{{ asset('assets/images/uploads/' ~ imgPath) }}">
+                                                    {{ item.Title }}
+                                                    --
+                                                    {{ item.Price|number_format(2)  }}$
+                                                </a>
+                                            </dt>
+                                            <dd>
+                                                {{ item.Description|striptags }}
+                                            </dd>
+
+                                        {% endfor %}
+
+
+                                    </dl>
+
+                                    <div class="rm-order mt-3">
+                                        <a href="{{ path('home') }}" style="color: blue;">
+                                            Back to home page
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /rm-content -->
+                        </div>
+                        <!-- /rm-back -->
+
+                    </div>
+                    <!-- /rm-right -->
+                </div>
+                <!-- /rm-wrapper -->
+
+            </div>
+            <!-- /rm-container -->
+
+        </section>
+
+        {% include "_client_scripts.html.twig" %}
+        <script src="{{ asset('assets/carte/js/modernizr.custom.79639.js') }}"></script>
+        <script src="{{ asset('assets/js/app.js') }}"></script>
+        <script src="{{ asset('assets/carte/js/menu.js') }}"></script>
+        <script type="text/javascript">
+            $(function () {
+
+                Menu.init();
+
+            });
+
+            function toggleMenu() {
+                let btnToggleMenuText = $('#btnToggleMenu').html();
+
+                if (btnToggleMenuText == 'View Lunch Menu') {
+                    $('#allDayMenu').hide();
+                    $('#lunchMenu').show();
+                    $('#btnToggleMenu').html('View All Day Menu');
+                } else {
+                    $('#allDayMenu').show();
+                    $('#lunchMenu').hide();
+                    $('#btnToggleMenu').html('View Lunch Menu');
+                }
+            }
+        </script>
+
+    </body>
+</html>

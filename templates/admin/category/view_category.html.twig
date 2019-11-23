@@ -1,0 +1,135 @@
+{% extends 'admin/base.html.twig' %}
+
+{% set catImgPath = category.HeaderImage == null ? 's1.jpg' : category.HeaderImage %}
+
+{% block title %}
+    Category Details
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item">
+        Categories
+    </li>
+    <li class="breadcrumb-item active">Details</li>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="{{ category.icon }}"></i>
+                {{ category.Title }}
+                {% if category.IsOnHomePage %}
+                    <span class="badge badge-secondary small">On home page</span>
+                {% endif %}
+            </h2>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <b>Header image for pages:</p>
+                    <img src="{{ asset('assets/images/uploads/' ~ catImgPath) }}" alt="{{ category.Title }}" width="100%" height="250px">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-lg-3">
+                    <p>
+                        Category Id:
+                        {{ category.Id }}
+                    </p>
+                </div>
+                <div class="col-lg-3">
+                    <p>
+                        Icon class:
+                        {{ category.icon }}
+                    </p>
+                </div>
+                <div class="col-lg-3">
+                    <p>
+                        Created at:
+                        {{ category.CreatedAt|date }}
+                    </p>
+                </div>
+                <div class="col-lg-3">
+                    <p>
+                        {% if category.IsDeleted %}
+                            Deleted at:
+                            {{ category.DeletedAt|date }}
+
+                        {% else %}
+                            Available
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Items in this category
+                        </div>
+                        <div class="card-body">
+                            <div class="comment-wrapper">
+                                <div class="clearfix"></div>
+                                <ul class="media-list">
+                                    {% for item in category.Items %}
+                                        {% set itemImgPath = item.Image == null ? 'noimage.png' : item.Image %}
+                                        <li class="media">
+                                            <img src="{{ asset('assets/images/uploads/' ~ itemImgPath) }}" class="img-circle2 mr-2">
+                                            <div class="media-body">
+                                                <strong class="text-success">{{ item.Title }}</strong>
+                                                <span class="text-muted small">
+                                                    {{ item.Price }}$
+                                                </span>
+                                                <p class="small">
+                                                    {{ item.Description|striptags }}
+                                                    <br>
+                                                    <a href="{{ path('item_details', {id : item.Id}) }}" class="small">
+                                                        Details
+                                                    </a>
+                                                    <a href="{{ path('edit_item', {id : item.Id}) }}" class="small">
+                                                        Edit
+                                                    </a>
+
+                                                    <form action="{{ path('trash_item') }}" method="POST" style="display:inline;" id="form_trash" name="form_trash">
+
+                                                        <input type="hidden" name="token" value="{{ csrf_token('trash-item') }}"/>
+                                                        <input type="hidden" name="itemId" value="{{ item.Id }}">
+
+                                                        <button type="submit" class="btn btn-link text-danger small" onclick="return confirm('Move item #{{ item.Id }} to trash?');">
+                                                            Trash
+                                                        </button>
+                                                    </form>
+
+                                                </p>
+                                            </div>
+                                        </li>
+
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <a href="{{path('list_categories')}}" class="btn btn-secondary btn-sm btn-block">
+                Back to categories list
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

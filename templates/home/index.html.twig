@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% set imgPath = SystemSettings.HomePageBackground == null ? 'assets/images/bg.jpg' :  'assets/images/uploads/' ~ SystemSettings.HomePageBackground %}
+
+
+{% block title %}Home
+{% endblock %}
+
+{% block body %}
+
+    <div class="bg"  style="background-image: url('{{ asset(imgPath) }}');">
+        <div class="container">
+            <div class="empty"></div>
+            <div class="jumbotron text-center">
+                <h1 class="display-3">
+                    {{ SystemSettings.AppName }}
+                </h1>
+                <p class="lead">{{ SystemSettings.AppInfo }}</p>
+                <p class="">{{ SystemSettings.AppInfo2 }}</p>
+                <hr class="my-2">
+                <p class="lead">
+                    <a class="btn btn-info" href="#menu" role="button">Discover Our Menu</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2>
+                    <i class="fas fa-info-circle"></i>
+                    About us
+                </h2>
+                <p class="aboutustext">
+                    {{ SystemSettings.AboutusText|raw }}
+                </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <img src="{{ asset ('/assets/images/uploads/' ~ SystemSettings.AboutusImage) }}" width="100%" height="300px" class="mt-5" style="border-radius: 10px;">
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-3" id="menu">
+
+            <div class="col-lg-4">
+                <h2>
+                    <i class="far fa-list-alt"></i>
+                    Top Menu
+                </h2>
+            </div>
+            <div class="col-lg-8">
+                <a href="{{ path('menu') }}" class="btn btn-secondary btn-block btn-sm">Go to menu</a>
+            </div>
+        </div>
+        <div class="row mt-2">
+            {% for category in Categories %}
+
+                <div class="col-lg-4">
+                    <div class="comment-wrapper">
+                        <h5>
+                            <strong>
+                                <i class="{{ category.icon }}"></i>
+                                {{ category.Title }}
+                            </strong>
+                        </h5>
+                        <hr>
+                        <div class="clearfix"></div>
+                        <ul class="media-list">
+                            {% for item in category.ItemsHome %}
+
+                                {% set itemImgPath = item.Image == null ? 'noimage.png' : item.Image %}
+
+                                <li class="media">
+                                    <img src="{{ asset('assets/images/uploads/' ~ itemImgPath) }}" alt=" " class="img-circle mr-2">
+                                    <div class="media-body">
+                                        <strong class="text-success">{{ item.Title }}</strong>
+                                        <span class="text-muted small">
+                                            {{ item.Price|number_format(2)  }}$
+                                        </span>
+                                        <p class="small">
+                                            {{ item.Description|striptags }}
+                                            <br>
+                                            <a href="{{ path('item_details', { id : item.Id }) }}" class="small">
+                                                Details
+                                            </a>
+                                        </p>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+
+
+    </div>
+    <div class=" mt-2">
+            <div class="text-center p-5 testimonials">
+                <h4>
+                    TESTIMONIALS
+                </h4>
+                <hr width="250">
+                <div id="demo" class="carousel slide" data-ride="carousel">
+
+                    <!-- Indicators -->
+                    <ul class="carousel-indicators">
+                        {% for t in testimonials %}
+                            {% if loop.index0 == 0 %}
+                                <li data-target="#demo" data-slide-to="{{ loop.index0 }}" class="active mt-4"></li>
+                            {% else %}
+                                <li data-target="#demo" data-slide-to="{{ loop.index0 }}" class=" mt-4"></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
+                    <!-- The slideshow -->
+                    <div class="carousel-inner mt-3">
+                        {% for t in testimonials %}
+                            
+                            {% if loop.index == 1 %}
+                            
+                            <div class="carousel-item active pb-4">
+                                <p>{{ t.Text|raw }}.</p>
+                                <p style="font-style: italic;">- {{ t.UserName }}</p>
+                            </div>
+
+                            {% else %}
+                            <div class="carousel-item pb-4">
+                                    <p>{{ t.Text|raw }}.</p>
+                                    <p style="font-style: italic;">- {{ t.UserName }}</p>
+                                </div>
+                            {% endif %}
+
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Message
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('list_messages')}}">Messages</a>
+    </li>
+    <li class="breadcrumb-item active">
+        Message details
+    </li>
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                {{ message.Subject }}
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-sm-3">
+                    <p>
+                        <strong>Message Id:</strong>
+                        {{ message.Id }}
+                    </p>
+                </div>
+                <div class="col-lg-3 col-sm-3">
+                    <p>
+                        <strong>Name:</strong>
+                        {{ message.Name }}
+                    </p>
+                </div>
+                <div class="col-lg-3 col-sm-3">
+                    <p>
+                        <strong>Email:</strong>
+                        {{ message.Email }}
+                    </p>
+                </div>
+                <div class="col-lg-3 col-sm-3">
+                    <p>
+                        <strong>Date:</strong>
+                        {{ message.CreatedAt|date }}
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>
+                        <strong>Message:</strong>
+                    </p>
+
+                    <textarea readonly name="msg" id="msg" cols="30" rows="10" class="form-control bg-white">{{message.Text}}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('reply_message', {id: message.Id}) }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-reply"></i>
+                Reply
+            </a>
+            <a href="{{ path('mark_unseen', {id: message.Id}) }}" class="btn btn-secondary btn-sm">
+                <i class="fas fa-eye-slash"></i>
+                Mark as unseen
+            </a>
+            <a href="{{ path('list_messages') }}" class="btn btn-warning btn-sm">
+                <i class="fas fa-times"></i>
+                Close
+            </a>
+
+            <form action="{{ path('delete_message') }}" method="POST" style="display:inline;" id="form_delete" name="form_delete">
+
+                <input type="hidden" name="token" value="{{ csrf_token('delete-message') }}"/>
+                <input type="hidden" name="msgId" value="{{ message.Id }}">
+
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this message #{{message.Id}}?')">
+                    <i class="fas fa-trash"></i>
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}404 Not Found
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item">
+        Categories
+    </li>
+    <li class="breadcrumb-item active">Error 404</li>
+
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="alert alert-danger text-center">
+        <h1>{{ errorMessage }}</h1>
+    </div>
+
+
+{% endblock %}

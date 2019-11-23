@@ -1,0 +1,78 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Address
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item active">
+        Address
+    </li>
+
+{% endblock %}
+
+
+{% block body %}
+    {{ form_start(form) }}
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="fas fa-map-marked-alt"></i>
+                Edit Address
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="address_Address_Street">Address Street:</label>
+                {{form_widget(form.Address_Street, {'attr': {'class': 'form-control'  }})}}
+            </div>
+
+            <div class="form-group">
+                <label for="address_Address_City">Address City:</label>
+                {{form_widget(form.Address_City, {'attr': {'class': 'form-control'  }})}}
+            </div>
+
+            <div class="form-group">
+                <label for="address_Address_Country">Address Country:</label>
+                {{form_widget(form.Address_Country, {'attr': {'class': 'form-control'  }})}}
+            </div>
+
+            <div class="form-group">
+                <label for="address_Location_Longitude">Longitude:</label>
+                {{form_widget(form.Location_Longitude, {'attr': {'class': 'form-control', 'placeholder' : 'Enter location longitude'  }})}}
+            </div>
+
+            <div class="form-group">
+                <label for="address_Location_Latitude">Latitude:</label>
+                {{form_widget(form.Location_Latitude, {'attr': {'class': 'form-control', 'placeholder' : 'Enter location latitude'  }})}}
+            </div>
+
+            <div class="form-group">
+                <label for="address_Google_Iframe">Google maps iframe link:</label>
+                {{form_widget(form.Google_Iframe, {'attr': {'class': 'form-control'  }})}}
+            </div>
+
+            <div class="text-danger">
+                    {{ form_errors(form.Address_Street) }}
+                    {{ form_errors(form.Address_City) }}
+                    {{ form_errors(form.Address_Country) }}
+                {{ form_errors(form.Google_Iframe) }}
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">
+                Save
+                <i class="fas fa-save"></i>
+            </button>
+            <a href="{{ path('dashboard') }}" class="btn btn-secondary">
+                    Cancel
+                    <i class="fas fa-window-close"></i>
+                </a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

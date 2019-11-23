@@ -1,0 +1,85 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Create Category
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item">
+        Categories
+    </li>
+    <li class="breadcrumb-item active">Create</li>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="fas fa-plus-circle"></i>
+                Add New Category:</h2>
+        </div>
+        <div class="card-body">
+
+            <div class="form-group">
+                <label for="category_Title">Title</label>
+                {{form_widget(form.Title, {'attr': {'class': 'form-control' , 'placeholder': 'Enter category title' }})}}
+            </div>
+
+            <div class="form-group ">
+                <label for="category_IsOnHomePage">Display on home page</label>
+                <input type="hidden" name="category[IsOnHomePage]" value="0">
+                {{form_widget(form.IsOnHomePage)}}
+                <p>
+                    <span class="small text-danger">Only 3 categories are displayed on home page</span>
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label for="category_icon">Icon</label>
+                <div class="custom-file">
+                    {{form_widget(form.icon, {'attr': {'class': 'form-control'  ,'placeholder': 'Enter category icon classes' }})}}
+                </div>
+                <span class="small text-muted">
+                    Please choose your icon from this  
+                    <a href="https://fontawesome.com/icons" target="_blank">Website.</a>
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="category_header_image">Header Image</label>
+                <div class="custom-file">
+                    {{form_widget(form.header_image, {'attr': {'class': 'form-control custom-file-input'  }})}}
+                    <label class="custom-file-label">Choose a file...</label>
+                </div>
+            </div>
+
+            <div class="text-danger">
+                {{ form_errors(form.Title) }}
+                {{ form_errors(form.header_image) }}
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-success" style="width: 150px;">
+                Save
+                                &nbsp;
+                <i class="fas fa-save"></i>
+            </button>
+            <a href="{{ path('dashboard') }}" class="btn btn-secondary">
+                Cancel
+                <i class="fas fa-window-close"></i>
+            </a>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

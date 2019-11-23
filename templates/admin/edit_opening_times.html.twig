@@ -1,0 +1,128 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Edit opening times
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item active">
+        Opening Times
+    </li>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="fas fa-pencil-alt"></i>
+                Edit Opening Times
+            </h2>
+        </div>
+        <div class="card-body">
+
+            {{ form_start(form) }}
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="opening_times_Day">Day:</label>
+                        {{form_widget(form.Day, {'attr': {'class': 'form-control', 'placeholder' : 'Enter a day'  }})}}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="opening_times_DayOrder">Day Order:</label>
+                        {{form_widget(form.DayOrder, {'attr': {'class': 'form-control', 'placeholder' : 'Enter day order'  }})}}
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="opening_times_Open_hour">Open Hour:</label>
+                        {{form_widget(form.Open_hour, {'attr': {'class': 'form-control', 'placeholder' : 'Enter a Open Hour'  }})}}
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="opening_times_Close_hour">Close Hour:</label>
+                        {{form_widget(form.Close_hour, {'attr': {'class': 'form-control', 'placeholder' : 'Enter a Close Hour'  }})}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-danger">
+                        {{ form_errors(form.Day) }}
+                        {{ form_errors(form.DayOrder) }}
+                        {{ form_errors(form.Open_hour) }}
+                        {{ form_errors(form.Close_hour) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">
+                            Save
+                        </button>
+                        <a href="{{ path('dashboard') }}" class="btn btn-secondary">
+                                Cancel
+                                <i class="fas fa-window-close"></i>
+                            </a>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+            <hr>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Day Order</th>
+                            <th>Day</th>
+                            <th>Opening Hour</th>
+                            <th>Closing Hour</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for o in OpeningTimes %}
+                            <tr>
+                                <td>{{ o.Id }}</td>
+                                <td>{{ o.DayOrder }}</td>
+                                <td>{{ o.Day }}</td>
+                                <td>{{ o.OpenHour }}</td>
+                                <td>{{ o.CloseHour }}</td>
+                                <td>
+                                    <form action="{{ path('delete_opening_time') }}" method="POST">
+                                        <input type="hidden" name="token" value="{{ csrf_token('delete-ot') }}"/>
+                                        <input type="hidden" name="oId" value="{{ o.Id }}">
+                                        <button type="submit" class="btn btn-link"
+                                                onclick="return confirm('Delete record #{{ o.Id }} ?');">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

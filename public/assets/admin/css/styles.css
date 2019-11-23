@@ -1,0 +1,13 @@
+.gallary-image-box{
+    height: 325px;
+    width: 300px;
+    float: left;
+    box-shadow: 7px 7px 7px;
+    margin-right: 25px;
+    margin-bottom: 25px;
+}
+
+.gallary-image-box img{
+    height: 250px;
+    width: 100%;
+}

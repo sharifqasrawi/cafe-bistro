@@ -1,0 +1,95 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Gallary
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <li class="breadcrumb-item">
+        <a href="{{ path('dashboard')}}">Admin</a>
+    </li>
+    <li class="breadcrumb-item active">
+        Gallary
+    </li>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                <i class="far fa-images"></i>
+                Gallary Images
+                <span class="badge badge-secondary">{{ ImagesCount }}</span>
+            </h2>
+        </div>
+        <div class="card-body">
+            {{ form_start(form) }}
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="gallary_image_Title">Title:</label>
+                        {{ form_widget(form.Title, { 'attr' : { 'class' : 'form-control', 'placeholder': 'Enter image title' } }) }}
+                    </div>
+                    <!-- <div class="form-group ">
+                        <label for="gallary_image_isSlide">Is Slide:</label>
+                        <input type="hidden" name="gallary_image[isSlide]" value="0">
+                        {{form_widget(form.isSlide)}}
+                    </div> -->
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="gallary_image_Image">Image*:</label>
+                        <div class="custom-file">
+                            {{form_widget(form.Image, {'attr': {'class': 'form-control custom-file-input'  }})}}
+                            <label class="custom-file-label">Choose a file...</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-danger">
+                        {{ form_errors(form.Image) }}
+                        {{ form_errors(form.isSlide) }}
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Add Image</button>
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+
+            <hr>
+
+            {% for image in Images %}
+                <div class="gallary-image-box">
+                    <img src="{{ asset('assets/images/uploads/' ~ image.Image) }}" alt="Image">
+                    <div class="text-center">
+                        <h4 class="text-muted mt-2">{{ (image.Title == null ? 'No Title' : image.Title) }}</h4>
+
+                        <form action="{{ path('delete_gallary_image') }}" method="POST">
+                            <input type="hidden" name="token" value="{{ csrf_token('delete-image') }}">
+                            <input type="hidden" name="imageId" value="{{ image.Id }}">
+                            <button type="submit" class="btn btn-link" onclick="return confirm('Delete this image?');">
+                                <i class="fas fa-trash-alt text-danger"></i>
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="card-footer">
+            {{ knp_pagination_render(Images) }}
+        </div>
+    </div>
+
+{% endblock %}

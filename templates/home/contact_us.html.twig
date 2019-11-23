@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% set imgPath = SystemSettings.ContactHeaderImage == null ? 'assets/images/contactus2.jpg' :  'assets/images/uploads/' ~ SystemSettings.ContactHeaderImage %}
+
+
+{% block title %}Contact us
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="header-image" style="background-image: url('{{ asset(imgPath) }}');">
+        <div class="container">
+            <h1 class="text-white contact-us-header-text">Contact us</h1>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-lg-8">
+                <h5 class="row">
+                    <b>Send us a message:</b>
+                </h5>
+
+                {{form_start(form)}}
+                <div class="form-group row">
+                    <label for="Name" class="col-sm-2 col-form-label">Name:</label>
+                    <div class="col-sm-10">
+                        {{form_widget(form.Name, {'attr': {'class': 'form-control', 'value' : cookieName , 'placeholder': 'Enter your name' }})}}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="Email" class="col-sm-2 col-form-label">Email:</label>
+                    <div class="col-sm-10">
+                        {{form_widget(form.Email, {'attr': {'class': 'form-control' , 'value': cookieEmail , 'placeholder': 'Enter your email' }})}}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="Subject" class="col-sm-2 col-form-label">Subject:</label>
+                    <div class="col-sm-10">
+                        {{form_widget(form.Subject, {'attr': {'class': 'form-control' , 'placeholder': 'Enter message subject' }})}}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="Text" class="col-sm-2 col-form-label">Text:</label>
+                    <div class="col-sm-10">
+                        {{form_widget(form.Text, {'attr': {'class': 'form-control', 'rows' : '8' , 'placeholder': 'Enter message text' }})}}
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-sm-10 offset-2">
+                        <div class="text-danger small">
+                            {{form_errors(form.Name)}}
+                            {{form_errors(form.Email)}}
+                            {{form_errors(form.Subject)}}
+                            {{form_errors(form.Text)}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-10 offset-2">
+                        <button type="submit" class="btn btn-secondary">
+                            Send
+                        </button>
+                    </div>
+                </div>
+                {{form_end(form)}}
+            </div>
+            <div class="col-lg-4">
+                <h5>
+                    {{ SystemSettings.AddressStreet }}</h5>
+                <p>
+                    {{ SystemSettings.AddressCity }}</p>
+                <p>
+                    {{ SystemSettings.AddressCountry }}</p>
+                <p>
+                    <b>Email:</b>
+                    <a href="mailto:{{ SystemSettings.Email }}">{{ SystemSettings.Email }}</a>
+                </p>
+                <p>
+                    <b>Phone:</b>
+                    {{ SystemSettings.Phone }}</p>
+                <hr>
+                <iframe src="{{ SystemSettings.FacebookPageIframe }}" width="333" height="210" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+           
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% set imgPath = item.Category.HeaderImage == null ? 's1.jpg' : item.Category.HeaderImage %}
+
+{% block title %}Details
+{% endblock %}
+
+{% block body %}
+
+    <div class="header-image" style="background-image: url('/assets/images/uploads/{{ imgPath }}')">
+        <div class="container">
+            <h1 class="text-white contact-us-header-text">{{ item.Category.Title }}</h1>
+
+        </div>
+    </div>
+
+    <div class="container mt-3">
+
+        <div class="row ">
+            <div class="col-lg-4">
+                <img src="{{ asset('assets/images/uploads/' ~ item.Image) }}" alt="No Image Available" class="img-thumbnail" width="100%">
+            </div>
+            <div class="col-lg-8">
+                <h2>
+                    <strong>
+                        {{ item.Title }}
+                    </strong>
+                    <span class="small text-muted">{{ item.Price|number_format(2) }}$</span>
+                    <hr>
+                </h2>
+                <p>
+                    {{ item.Description|raw }}
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row bootstrap snippets mt-3" id="comments">
+                    <div class="col-md-12  col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 style="display: inline;">
+                                    Comments:
+                                </h3>
+                                <span class="badge badge-secondary" style="display: inline;">{{ item.comments.count }}</span>
+                            </div>
+                            <div class="card-body">
+
+                         
+                        <div class="comment-wrapper">
+
+                            {% if item.comments.count == 0 %}
+                                <p class="text-danger">
+                                    No comments yet.
+                                </p>
+                            {% else %}
+
+
+                                <div class="clearfix"></div>
+                                <div class="commentsDiv">
+                                    <ul class="media-list">
+                                        {% for comment in item.comments  %}
+                                            <li class="media">
+                                                <img src="{{ asset('assets/images/noprofile.jpg') }}" class="img-circle mr-2">
+                                                <div class="media-body">
+                                                    <strong class="text-success">{{comment.UserName}}</strong>
+                                                    <span class="text-muted small">
+                                                        {{ comment.CreatedAt|ago}}
+                                                        {% if UserName == comment.UserName and UserEmail == comment.UserEmail %}
+                                                            <form method="post" action="{{ path('delete_comment') }}" style="display: inline;">
+                                                                <input type="hidden" name="token" value="{{ csrf_token('delete-comment') }}"/>
+
+                                                                <input type="hidden" name="commentId" value="{{ comment.Id }}">
+                                                                <input type="hidden" name="UserName" value="{{ UserName }}">
+                                                                <input type="hidden" name="UserEmail" value="{{ UserEmail }}">
+
+                                                                <button type="submit" class="text-danger btn btn-link btn-sm">
+                                                                    Delete
+                                                                </button>
+                                                            </form>
+                                                        {% endif %}
+                                                    </span>
+                                                    <p>
+                                                        {{ comment.Text|raw }}
+                                                    </p>
+
+                                                </div>
+
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+
+                            <hr/>
+                            {{form_start(formNewComment)}}
+                            <input hidden="hidden" id="itemId" name="itemId" value="{{item.Id}}"/>
+                            <p class="text-muted small">
+                                Name and Email are required, your email address will not be published.
+                            </p>
+                            <div class="form-group">
+                                <label for="name">Name*</label>
+                                {{form_widget(formNewComment.User_name, {'attr': {'class': 'form-control' , 'value': UserName  ,'placeholder': 'Enter your name' }})}}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email*</label>
+                                {{form_widget(formNewComment.User_email, {'attr': {'class': 'form-control' , 'value': UserEmail  ,'placeholder': 'Enter your Email' }})}}
+                            </div>
+
+                            <div class="form-group">
+
+                                {{form_widget(formNewComment.Text, {'attr': {'class': 'form-control' , 'placeholder': 'Write a comment' }})}}
+                            </div>
+
+                            <div class="form-group">
+                                <input type="checkbox" name="saveuser" id="saveuser">
+                                <label for="saveuser">Save name and email for this browser</label>
+                            </div>
+
+                            <div class="text-danger small">
+                                {{form_errors(formNewComment.User_name)}}
+                                {{form_errors(formNewComment.User_email)}}
+                                {{form_errors(formNewComment.Text)}}
+                            </div>
+
+                            <p class="mt-2">
+                                <button type="submit" class="btn btn-info btn-sm ">Post Comment</button>
+                                {{ UserName }}
+                            </p>
+                            {{form_end(formNewComment)}}
+                        </div>
+                    </div>
+                </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <div class="row mb-2">
+            <div class="col-lg-12">
+                <a href="{{ path('menu') }}" class="btn btn-info btn-block btn-sm ">Back to menu</a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

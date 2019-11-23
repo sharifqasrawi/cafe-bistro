@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Login</title>
+        <link rel="stylesheet" href="{{asset('assets/css/fontawesome.min.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/login.css')}}">
+
+    </head>
+    <body style="background: rgb(59, 59, 59) url('/assets/images/uploads/{{ SystemSettings.LoginPageBackground }}') no-repeat center; background-size: cover;">
+
+
+        <form method="POST" action="{{ path('login') }}" class="form-signin">
+            <h1 class="h3 mb-3 font-weight-normal text-center">
+                {{ SystemSettings.AppName }}
+            </h1>
+            <h6 class="mb-3 font-weight-normal text-center text-muted">
+                Login to admin page
+            </h6>
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" name="_email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" name="_password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me">
+                    Remember me
+                </label>
+            </div>
+            <button class="btn  btn-secondary btn-block" type="submit">
+                Login in
+                <i class="fas fa-check-circle"></i>
+            </button>
+
+            <p class="mt-3 mb-3 text-muted small">&copy; 2017-2018
+                <a href="{{path('home')}}">Home Page</a>
+            </p>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        </form>
+
+    </body>
+</html>
