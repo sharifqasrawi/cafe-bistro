@@ -40,14 +40,11 @@ Create your MySQL database and run _bin/console make migration_ then _bin/consol
 
 * Restaurant menu licenses:
 > Created by Codrops
-License: http://tympanus.net/codrops/licensing/
-
-Background Pattern(s) from http://subtlepatterns.com/
-http://creativecommons.org/licenses/by-sa/3.0/deed.en_US
-
-normalize.css by Nicolas Gallagher: http://github.com/necolas/normalize.css
-
-Stone Pattern by AGF81:
+> License: http://tympanus.net/codrops/licensing/
+> Background Pattern(s) from http://subtlepatterns.com/
+> http://creativecommons.org/licenses/by-sa/3.0/deed.en_US
+> normalize.css by Nicolas Gallagher: http://github.com/necolas/normalize.css
+> Stone Pattern by AGF81:
 http://agf81.deviantart.com/gallery/31629552#/d49w3l3
 
 * Admin page layout by CoreUI
