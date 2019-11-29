@@ -48,3 +48,6 @@ Create your MySQL database and run _bin/console make migration_ then _bin/consol
 http://agf81.deviantart.com/gallery/31629552#/d49w3l3
 
 * Admin page layout by CoreUI
+
+* You can get the mobile app by checking out this repository: 
+> https://github.com/sharifqasrawi/Cafe-Bistro-Mobile
