@@ -215,19 +215,19 @@ class HomeController extends AbstractController
 
         $Categories = $this->getDoctrine()->getRepository(Category::class)->findNotDeleted();
 
-        $allDayMenu = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['Title' => 'All Day menu']);
-        $spcMenu = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['Title' => 'La Fontaine Specials']);
-        $lunchMenu = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['Title' => 'Lunch menu']);
-        $coffeeMenu = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['Title' => 'Coffee & Beverages menu']);
+        $menu1 = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['Title' => 'Menu 1']);
+        $menu2 = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['Title' => 'Menu 2']);
+        $menu4 = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['Title' => 'Menu 4']);
+        $menu3 = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['Title' => 'Menu 3']);
 
         return $this->render('home/menu.html.twig', [
             'SystemSettings' => $SystemSettings,
             'OpeningTimes' => $OpeningTimes,
             'Categories' => $Categories,
-            'allDayMenu' => $allDayMenu,
-            'lunchMenu' => $lunchMenu,
-            'coffeeMenu' => $coffeeMenu,
-            'spcMenu' => $spcMenu,
+            'menu1' => $menu1,
+            'menu2' => $menu2,
+            'menu4' => $menu4,
+            'menu3' => $menu3,
         ]);
     }
 

@@ -7,29 +7,34 @@
 
 {% block body %}
 
-    <div class="header-image" style="background-image: url('{{ asset(imgPath) }}')">
-        <div class="container">
-            <h1 class="text-white contact-us-header-text">Photo Gallery</h1>
-        </div>
-    </div>
+	<div class="header-image" style="background-image: url('{{ asset(imgPath) }}')">
+		<div class="container">
+			<h1 class="text-white contact-us-header-text">Photo Gallery</h1>
+		</div>
+	</div>
 
-    <div style="background-image: url('{{ asset('assets/images/tbg.jpg') }}');">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="mt-2 text-center alert alert-info">
-                        <i class="fas fa-images"></i>
-                        Our Gallery
-                    </h2>
-                    <hr style="border:1px solid white;">
-                    {% for photo in photos %}
-                        <img src="{{ asset('assets/images/uploads/' ~ photo.Image) }}" 
-                         class="gallery-img mb-4" alt="{{photo.Title}}">
-                    {% endfor %}
+	<div style="background-image: url('{{ asset('assets/images/tbg.jpg') }}');">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2 class="mt-2 text-center alert alert-info">
+						<i class="fas fa-images"></i>
+						Our Gallery
+					</h2>
+					<hr style="border:1px solid white;">
+					{% if photos|length == 0 %}
+                            <h3 class="alert alert-info text-center">
+                                NO PHOTOS YET
+                            </h3>
+						{% else %}
+							{% for photo in photos %}
+								<img src="{{ asset('assets/images/uploads/' ~ photo.Image) }}" class="gallery-img mb-4" alt="{{photo.Title}}">
+							{% endfor %}
+					{% endif %}
 
-                   
-                </div>
-            </div>
-        </div>
-    </div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

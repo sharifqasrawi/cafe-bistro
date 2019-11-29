@@ -23,7 +23,7 @@ class SecurityController extends AbstractController
     {
         $SystemSettings = $this->getDoctrine()->getRepository(SystemSettings::class)->find(1);
 
-        if($SystemSettings->getIsFirstRun() == 0)
+        if($SystemSettings->getIsFirstRun() == 1)
         {
             return $this->redirectToRoute('register');
         }
@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
     {
         $SystemSettings = $this->getDoctrine()->getRepository(SystemSettings::class)->find(1);
 
-        if($SystemSettings->getIsFirstRun() == 1)
+        if($SystemSettings->getIsFirstRun() == 0)
         {
             return $this->redirectToRoute('login');
         }
@@ -70,7 +70,7 @@ class SecurityController extends AbstractController
                 $user->setRoles(['ROLE_ADMIN']);
             }
 
-            $SystemSettings->setIsFirstRun(1);
+            $SystemSettings->setIsFirstRun(false);
             $entityManager->persist($SystemSettings);
 
             $entityManager->persist($user);

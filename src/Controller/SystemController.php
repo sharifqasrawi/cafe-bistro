@@ -312,7 +312,7 @@ class SystemController extends AbstractController
         }
 
 
-        $this->addFlash('error', 'Error changing logo image.');
+        $this->addFlash('error', 'Error changing home page image.');
         return $this->redirectToRoute('website_images');
     }
 

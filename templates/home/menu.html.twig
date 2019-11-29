@@ -53,6 +53,11 @@
 
         </header>
 
+        {% if Categories == null %}
+            <h1 class="alert alert-info text-center">No menu yet</h1>
+        {% else %}
+            
+      
 
         <section class="main mt-4">
 
@@ -95,10 +100,10 @@
                         <div class="rm-back">
                             <div class="rm-content">
                                 <div class="content hidden">
-                                    <div id="allDayMenu">
-                                        <h4>{{ allDayMenu.Title }}</h4>
+                                    <div id="menu1">
+                                        <h4>{{ menu1.Title }}</h4>
                                         <dl>
-                                            {% for item in allDayMenu.Items %}
+                                            {% for item in menu1.Items %}
                                             {% set imgPath = item.Image == null ? 'noimage.png' : item.Image %}
                                                 <dt>
                                                     <a href="{{ path('item_details', { 'id' : item.Id }) }}" class="rm-viewdetails" data-thumb="{{ asset('assets/images/uploads/' ~ imgPath) }}">
@@ -112,10 +117,10 @@
                                         </dl>
                                     </div>
 
-                                    <div id="lunchMenu" style="display: none;">
-                                        <h4>{{ lunchMenu.Title }}</h4>
+                                    <div id="menu2" style="display: none;">
+                                        <h4>{{ menu2.Title }}</h4>
                                         <dl>
-                                            {% for item in lunchMenu.Items %}
+                                            {% for item in menu2.Items %}
                                             {% set imgPath = item.Image == null ? 'noimage.png' : item.Image %}
 
                                                 <dt>
@@ -146,9 +151,9 @@
                         <div class="rm-inner">
                             <div class="rm-content">
                                 <div class="content hidden">
-                                    <h4>{{ spcMenu.Title }}</h4>
+                                    <h4>{{ menu3.Title }}</h4>
                                     <dl>
-                                        {% for item in spcMenu.Items %}
+                                        {% for item in menu3.Items %}
                                         {% set imgPath = item.Image == null ? 'noimage.png' : item.Image %}
 
                                             <dt>
@@ -181,9 +186,9 @@
                             <span class="rm-close">Close</span>
                             <div class="rm-content">
                                 <div class="content hidden">
-                                    <h4>{{ coffeeMenu.Title }}</h4>
+                                    <h4>{{ menu4.Title }}</h4>
                                     <dl>
-                                        {% for item in coffeeMenu.Items %}
+                                        {% for item in menu4.Items %}
                                         {% set imgPath = item.Image == null ? 'noimage.png' : item.Image %}
 
                                             <dt>
@@ -222,7 +227,7 @@
             <!-- /rm-container -->
 
         </section>
-
+        {% endif %}
         {% include "_client_scripts.html.twig" %}
         <script src="{{ asset('assets/carte/js/modernizr.custom.79639.js') }}"></script>
         <script src="{{ asset('assets/js/app.js') }}"></script>
@@ -238,12 +243,12 @@
                 let btnToggleMenuText = $('#btnToggleMenu').html();
 
                 if (btnToggleMenuText == 'View Lunch Menu') {
-                    $('#allDayMenu').hide();
-                    $('#lunchMenu').show();
+                    $('#menu1').hide();
+                    $('#menu2').show();
                     $('#btnToggleMenu').html('View All Day Menu');
                 } else {
-                    $('#allDayMenu').show();
-                    $('#lunchMenu').hide();
+                    $('#menu1').show();
+                    $('#menu2').hide();
                     $('#btnToggleMenu').html('View Lunch Menu');
                 }
             }
